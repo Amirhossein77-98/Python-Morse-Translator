@@ -16,9 +16,14 @@ A simple Morse Code to Text / Text to Morse Code Translator
    ```
 
 2. **Run the translator:**
-   ```
-   python3 main.py
-   ```
+     - Linux/Mac/Termux:
+        ```
+        python3 main.py
+        ```
+     - Windows:
+        ```
+        python main.py
+        ```
 
 3. **Follow the prompts to enter text or Morse code.**
 
