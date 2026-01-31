@@ -47,21 +47,35 @@ morse_dict = {
     "&": ".-..."
 }
 
-def is_morse_valid(morse_code):
+def is_morse_valid(morse_code) -> bool:
     for char in morse_code:
         if char not in ['.', '-', ' ', '/']:
             return False
     return True
 
-def text_to_morse(taxt):
-    pass
+def string_tokenizer(string, delimiter) -> list[str]:
+    tokens = []
+    for token in string.split(delimiter):
+        tokens.append(token)
+    return tokens
 
-def morse_to_text(morse_code):
+def text_to_morse(text) -> str:
+    tokens: list[str] = string_tokenizer(text.upper(), ' ')
+    translated_tokens: list[str] = []
+    for token in tokens:
+        translated_chars: list[str] = []
+        for char in token:
+            equivalent_morse_code = morse_dict[char]
+            translated_chars.append(equivalent_morse_code)
+        translated_tokens.append(" ".join(translated_chars))
+    return " / ".join(translated_tokens)
+
+def morse_to_text(morse_code) -> str:
     pass
 
 def main():
+    print(f"{'*'*5} Morse Code Translator {'*'*5} \n")
     while True:
-        print(f"{'*'*5} Morse Code Translator {'*'*5}")
         print("Please choose what you want to do (enter the option number only): ")
         print("1. Text to Morse Code")
         print("2. Morse Code to Text")
@@ -70,7 +84,7 @@ def main():
         user_choice: int
         while True:
             try:
-                user_choice = int(input("Your choice: "))
+                user_choice = int(input("> Your choice: "))
                 if user_choice in [1, 2, 3]:
                     break
                 else:
@@ -80,18 +94,20 @@ def main():
                 continue
         
         if user_choice == 3:
-            print("Exiting the program. Goodbye!")
+            print("\n##### Exiting the program. Goodbye!\n")
             break
 
         while True:
-            user_input: str = input(f"Enter your {"Text" if user_choice == 1 else "Morse Code"}: ")
+            user_input: str = input(f"\nEnter your {"Text" if user_choice == 1 else "Morse Code"}: ").strip()
             if user_choice == 1:
-                print(f"Original Text: {user_input}")
-                print(f"Translated Morse: {text_to_morse(user_input)}")
+                print(f"\n>>> Original Text: {user_input}")
+                print(f">>> Translated Morse: {text_to_morse(user_input)}")
+                print(f"\n{'='*25}\n")
                 break
             elif user_choice == 2 and is_morse_valid(user_input):
-                print(f"Original Morse Code: {user_input}")
-                print(f"Translated Text: {morse_to_text(user_input)}")
+                print(f"\n>>> Original Morse Code: {user_input}")
+                print(f">>> Translated Text: {morse_to_text(user_input)}")
+                print(f"\n{'='*25}\n")
                 break
             else:
                 print("Invalid Morse Code input. Please try again.")
