@@ -1,6 +1,18 @@
 from converters import Converters
 
 def main():
+    """
+    Main entry point for the Morse Code Translator application.
+    Provides an interactive command-line interface that allows users to:
+    - Convert text to Morse code
+    - Convert Morse code back to text
+    - Exit the application
+    The function runs in a continuous loop until the user chooses to quit.
+    For Morse code input, users should use ' / ' as a word separator and 
+    single spaces (' ') to separate individual characters.
+    Raises:
+        ValueError: Handled internally for invalid numeric input during menu selection.
+    """
     converter = Converters()
     print(f"\n{'*'*5} Morse Code Translator {'*'*5} \n")
     while True:

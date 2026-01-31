@@ -1,6 +1,13 @@
 from morse_dataset import MorseCodeDataset
 
 class Converters:
+    """
+    A utility class for converting between text and Morse code.
+    This class provides methods to translate text to Morse code and vice versa,
+    along with utility methods for validation and tokenization.
+    Attributes:
+        morse_dict (dict): A dictionary mapping characters to their Morse code equivalents.
+    """
     def __init__(self):
         self.morse_dict = MorseCodeDataset.morse_dict
 
