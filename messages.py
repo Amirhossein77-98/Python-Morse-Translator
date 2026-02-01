@@ -33,8 +33,8 @@ class OutputMessages:
     original_morse: str = ">>> Original Morse Code: "
     translated_text: str = ">>> Translated Text: "
     translated_morse: str = ">>> Translated Morse Code: "
-    valid_morse: str = ">>> It's Valid Morse."
-    invalid_morse: str = ">>> It's NOT a Valid Morse."
+    valid_morse: str = ">>> It's Valid Morse.\n"
+    invalid_morse: str = ">>> It's NOT a Valid Morse.\n"
 
 @dataclass
 class UIElements:

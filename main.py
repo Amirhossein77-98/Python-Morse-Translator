@@ -1,6 +1,6 @@
 from converters import Converters
-import argparse
 from messages import ErrorMessages, MenuMessages, OutputMessages, AppName, UIElements
+from cli_args_handler import ArgParserInit
 
 def main():
     """
@@ -17,29 +17,17 @@ def main():
     """
 
     converter = Converters()
-    parser = argparse.ArgumentParser(description="An argument parser to use the code as cli script.")
-    parser.add_argument('-m', '--morse', help="To enter morse directly and translate.")
-    parser.add_argument('-t', '--text', help="To enter text directly and translate.")
-    parser.add_argument('-vm', '--validate_morse', help="To check if a morse code is valid.")
-    args = parser.parse_args()
+    arg_parser = ArgParserInit()
+    args = arg_parser.parse()
     
     print(f"\n{'*'*5} {AppName.app_name} {'*'*5} \n")
-    if args.validate_morse:
-        if args.morse or args.text:
-            print(ErrorMessages.invalid_input_get_cli_help)
+    
+    if args.morse or args.text or args.validate_morse:
+        if (ArgParserInit.is_cli_args_valid(args)):
+            arg_parser.do_args_action(converter)
+                
         else:
-            print(OutputMessages.valid_morse if converter.is_morse_valid(args.validate_morse) else OutputMessages.invalid_morse)
-    if args.morse and args.text:
-        print(ErrorMessages.invalid_input_get_cli_help)
-    if args.morse or args.text:
-        if args.morse and converter.is_morse_valid(args.morse):
-            print(OutputMessages.original_morse + args.morse)
-            print(OutputMessages.translated_text + converter.morse_to_text(args.morse).title() + "\n")
-        elif args.text:
-            print(OutputMessages.original_text + args.text)
-            print(OutputMessages.translated_morse + converter.text_to_morse(args.text) + "\n")
-        else:
-            print(ErrorMessages.invalid_input)
+            print(OutputMessages.invalid_input_get_cli_help)
     else:
         while True:
             print(MenuMessages.menu_prompt)
