@@ -1,5 +1,5 @@
-from morse_dataset import MorseCodeDataset
-from utils import HelperFunctions
+from data.morse_dataset import MorseCodeDataset
+from utilities.utils import HelperFunctions
 
 class Converters:
     """

@@ -1,6 +1,6 @@
 import argparse
-from messages import OutputMessages, ErrorMessages
-from converters import HelperFunctions
+from views.messages import OutputMessages, ErrorMessages
+from models.converters import HelperFunctions
 
 class ArgParser:
     def __init__(self):

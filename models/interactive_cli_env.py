@@ -1,5 +1,5 @@
-from messages import MenuMessages, UIElements, ErrorMessages, OutputMessages
-from converters import Converters, HelperFunctions
+from views.messages import MenuMessages, UIElements, ErrorMessages, OutputMessages
+from models.converters import Converters, HelperFunctions
 
 class InteractiveCLIEnvironment:
     """

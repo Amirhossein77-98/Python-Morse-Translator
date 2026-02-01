@@ -1,7 +1,7 @@
-from converters import Converters
-from messages import OutputMessages, AppName
-from cli_args_handler import ArgParser
-from interactive_cli_env import InteractiveCLIEnvironment
+from models.converters import Converters
+from views.messages import OutputMessages, AppName
+from models.cli_args_handler import ArgParser
+from models.interactive_cli_env import InteractiveCLIEnvironment
 
 def main():
     """
