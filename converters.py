@@ -9,7 +9,8 @@ class Converters:
         morse_dict (dict): A dictionary mapping characters to their Morse code equivalents.
     """
     def __init__(self):
-        self.morse_dict = MorseCodeDataset.morse_dict
+        self.ascii_to_morse_dict = MorseCodeDataset.morse_dict
+        self.morse_to_ascii_dict = {v: k for k, v in MorseCodeDataset.morse_dict.items()}
 
     def is_morse_valid(self, morse_code) -> bool:
         for char in morse_code:
@@ -29,7 +30,10 @@ class Converters:
         for token in tokens:
             translated_chars: list[str] = []
             for char in token:
-                equivalent_morse_code = self.morse_dict[char]
+                try:
+                    equivalent_morse_code = self.ascii_to_morse_dict[char]
+                except:
+                    equivalent_morse_code = "?"
                 translated_chars.append(equivalent_morse_code)
             translated_tokens.append(" ".join(translated_chars))
         return " / ".join(translated_tokens)
@@ -40,13 +44,10 @@ class Converters:
         for token in tokens:
             translated_chars: list[str] = []
             for char in token.split(" "):
-                char_translation = ""
-                for key, value in self.morse_dict.items():
-                    if value == char:
-                        char_translation = key
-                        break
-                else:
-                    char_translation = "?"
-                translated_chars.append(char_translation)
+                try:
+                    equivalent_ascii_char = self.morse_to_ascii_dict[char]
+                except:
+                    equivalent_ascii_char = "?"
+                translated_chars.append(equivalent_ascii_char)
             translated_tokens.append("".join(translated_chars))
         return " ".join(translated_tokens)
