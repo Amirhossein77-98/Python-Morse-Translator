@@ -1,72 +1,35 @@
 from converters import Converters
-from messages import ErrorMessages, MenuMessages, OutputMessages, AppName, UIElements
-from cli_args_handler import ArgParserInit
+from messages import OutputMessages, AppName
+from cli_args_handler import ArgParser
+from interactive_cli_env import InteractiveCLIEnvironment
 
 def main():
     """
-    Main entry point for the Morse Code Translator application.
-    Provides an interactive command-line interface that allows users to:
-    - Convert text to Morse code
-    - Convert Morse code back to text
-    - Exit the application
-    The function runs in a continuous loop until the user chooses to quit.
-    For Morse code input, users should use ' / ' as a word separator and 
-    single spaces (' ') to separate individual characters.
+    Main entry point for the Morse Translator application.
+    Initializes the converter and argument parser, then routes execution based on:
+    - Command-line arguments (morse, text, or validate_morse flags)
+    - Interactive mode if no arguments are provided
+    Validates CLI arguments before execution and displays appropriate error messages
+    if invalid input is detected. Falls back to interactive CLI environment for
+    user-friendly interaction when no CLI arguments are specified.
     Raises:
-        ValueError: Handled internally for invalid numeric input during menu selection.
+        SystemExit: If invalid CLI arguments are provided.
     """
 
     converter = Converters()
-    arg_parser = ArgParserInit()
+    arg_parser = ArgParser()
     args = arg_parser.parse()
     
     print(f"\n{'*'*5} {AppName.app_name} {'*'*5} \n")
     
     if args.morse or args.text or args.validate_morse:
-        if (ArgParserInit.is_cli_args_valid(args)):
+        if (ArgParser.is_cli_args_valid(args)):
             arg_parser.do_args_action(converter)
-                
         else:
             print(OutputMessages.invalid_input_get_cli_help)
     else:
-        while True:
-            print(MenuMessages.menu_prompt)
-            print(MenuMessages.menu_options)
-            
-            user_choice: int
-            while True:
-                try:
-                    user_choice = int(input(MenuMessages.user_choice_input_msg))
-                    if user_choice in [1, 2, 3, 4]:
-                        break
-                    else:
-                        print(ErrorMessages.invalid_menu_option_choice)
-                except ValueError:
-                    print(ErrorMessages.invalid_menu_option_choice)
-                    continue
-            
-            if user_choice == 4:
-                print(MenuMessages.exiting_program_msg)
-                break
-
-            while True:
-                print(MenuMessages.morse_caution) if user_choice == 2 else ""
-                user_input: str = input(MenuMessages.prompt_for_text if user_choice == 1 else MenuMessages.prompt_for_morse).lstrip()
-                if user_choice == 1:
-                    print("\n" + OutputMessages.original_text + user_input)
-                    print(OutputMessages.translated_morse + converter.text_to_morse(text=user_input))
-                    print(UIElements.separator)
-                    break
-                elif user_choice == 2 and converter.is_morse_valid(user_input):
-                    print("\n" + OutputMessages.original_morse + user_input)
-                    print(OutputMessages.translated_text + converter.morse_to_text(morse_code=user_input).title())
-                    print(UIElements.separator)
-                    break
-                elif user_choice == 3:
-                    print(OutputMessages.valid_morse if converter.is_morse_valid(user_input) else OutputMessages.invalid_morse)
-                else:
-                    print(ErrorMessages.invalid_morse_input)
-                    continue
+        interactive_app_env: InteractiveCLIEnvironment = InteractiveCLIEnvironment(converter)
+        interactive_app_env.main_app_body()
 
 if __name__ == "__main__":
     main()

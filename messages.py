@@ -1,3 +1,17 @@
+"""
+Module containing dataclass definitions for application messages and UI elements.
+
+This module defines several dataclasses that centralize all user-facing strings
+used throughout the Morse Code Translator application, including error messages,
+menu prompts, output messages, and UI elements.
+
+Classes:
+    AppName: Stores the application name.
+    ErrorMessages: Contains error message strings for various error conditions.
+    MenuMessages: Contains menu-related prompts and options.
+    OutputMessages: Contains output message strings for translation results.
+    UIElements: Contains UI visual elements and separators.
+"""
 from dataclasses import dataclass
 from textwrap import dedent
 

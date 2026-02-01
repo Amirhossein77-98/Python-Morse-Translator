@@ -1,7 +1,8 @@
 import argparse
 from messages import OutputMessages, ErrorMessages
+from converters import HelperFunctions
 
-class ArgParserInit:
+class ArgParser:
     def __init__(self):
         self.parser: argparse.ArgumentParser = argparse.ArgumentParser(description="An argument parser to use the code as cli script.")
         self.parser.add_argument('-m', '--morse', help="To enter morse directly and translate.")
@@ -14,14 +15,14 @@ class ArgParserInit:
         return self.args
     
     def do_args_action(self, converter):
-        if self.args.morse and converter.is_morse_valid(self.args.morse):
+        if self.args.morse and HelperFunctions.is_morse_valid(self.args.morse):
             print(OutputMessages.original_morse + self.args.morse)
             print(OutputMessages.translated_text + converter.morse_to_text(self.args.morse).title() + "\n")
         elif self.args.text:
             print(OutputMessages.original_text + self.args.text)
             print(OutputMessages.translated_morse + converter.text_to_morse(self.args.text) + "\n")
         elif self.args.validate_morse:
-            print(OutputMessages.valid_morse if converter.is_morse_valid(self.args.validate_morse) else OutputMessages.invalid_morse)
+            print(OutputMessages.valid_morse if HelperFunctions.is_morse_valid(self.args.validate_morse) else OutputMessages.invalid_morse)
         else:
             print(ErrorMessages.invalid_input)
     
