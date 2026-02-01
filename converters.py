@@ -25,10 +25,7 @@ class Converters:
         return True
 
     def string_tokenizer(self, string: str, delimiter: str) -> list[str]:
-        tokens: list[str] = []
-        for token in string.split(delimiter):
-            tokens.append(token)
-        return tokens
+        return string.split(delimiter)
 
     def text_to_morse(self, text: str) -> str:
         tokens: list[str] = self.string_tokenizer(text.upper(), ' ')
