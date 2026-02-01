@@ -29,7 +29,7 @@ def main():
             print(OutputMessages.invalid_input_get_cli_help)
     else:
         interactive_app_env: InteractiveCLIEnvironment = InteractiveCLIEnvironment(converter)
-        interactive_app_env.main_app_body()
+        interactive_app_env.run()
 
 if __name__ == "__main__":
     main()

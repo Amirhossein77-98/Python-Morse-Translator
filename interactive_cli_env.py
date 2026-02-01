@@ -42,7 +42,7 @@ class InteractiveCLIEnvironment:
                 print(ErrorMessages.invalid_menu_option_choice)
                 continue
 
-    def main_app_body(self):
+    def run(self):
         while True:
             user_choice = self.show_menu_and_get_user_input()
             
