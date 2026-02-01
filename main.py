@@ -1,6 +1,6 @@
 from converters import Converters
 import argparse
-from messages import ErrorMessages, MenuMessages, OutputMessages
+from messages import ErrorMessages, MenuMessages, OutputMessages, AppName, UIElements
 
 def main():
     """
@@ -23,7 +23,7 @@ def main():
     parser.add_argument('-vm', '--validate_morse', help="To check if a morse code is valid.")
     args = parser.parse_args()
     
-    print(f"\n{'*'*5} Morse Code Translator {'*'*5} \n")
+    print(f"\n{'*'*5} {AppName.app_name} {'*'*5} \n")
     if args.validate_morse:
         if args.morse or args.text:
             print(ErrorMessages.invalid_input_get_cli_help)
@@ -63,16 +63,16 @@ def main():
 
             while True:
                 print(MenuMessages.morse_caution) if user_choice == 2 else ""
-                user_input: str = input(f"\n> Enter your {"Text" if user_choice == 1 else "Morse Code"}: ").strip()
+                user_input: str = input(MenuMessages.prompt_for_text if user_choice == 1 else MenuMessages.prompt_for_morse).lstrip()
                 if user_choice == 1:
                     print("\n" + OutputMessages.original_text + user_input)
                     print(OutputMessages.translated_morse + converter.text_to_morse(text=user_input))
-                    print(f"\n{'='*35}\n")
+                    print(UIElements.separator)
                     break
                 elif user_choice == 2 and converter.is_morse_valid(user_input):
                     print("\n" + OutputMessages.original_morse + user_input)
                     print(OutputMessages.translated_text + converter.morse_to_text(morse_code=user_input).title())
-                    print(f"\n{'='*35}\n")
+                    print(UIElements.separator)
                     break
                 elif user_choice == 3:
                     print(OutputMessages.valid_morse if converter.is_morse_valid(user_input) else OutputMessages.invalid_morse)

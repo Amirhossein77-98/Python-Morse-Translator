@@ -2,6 +2,10 @@ from dataclasses import dataclass
 from textwrap import dedent
 
 @dataclass
+class AppName:
+    app_name: str = "Morse Code Translator"
+
+@dataclass
 class ErrorMessages:
     invalid_input_get_cli_help: str = "Invalid Input. Please use '--help' to find cli args."
     invalid_input: str = "Invalid Input."
@@ -19,7 +23,9 @@ class MenuMessages:
     """)
     user_choice_input_msg: str = "> Your choice: "
     exiting_program_msg: str = "\n##### Exiting the program. Goodbye!\n"
-    morse_caution = "\n!!!CAUTION: Please use ' / ' as 'space' or seperator between words and simple space (' ') to separate characters."
+    morse_caution: str = "\n!!!CAUTION: Please use ' / ' as 'space' or seperator between words and simple space (' ') to separate characters."
+    prompt_for_text: str = "Enter your Text: "
+    prompt_for_morse: str = "Enter your Morse Code: "
 
 @dataclass
 class OutputMessages:
@@ -29,3 +35,7 @@ class OutputMessages:
     translated_morse: str = ">>> Translated Morse Code: "
     valid_morse: str = ">>> It's Valid Morse."
     invalid_morse: str = ">>> It's NOT a Valid Morse."
+
+@dataclass
+class UIElements:
+    separator: str = f"\n{'='*35}\n"
