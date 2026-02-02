@@ -53,3 +53,14 @@ class OutputMessages:
 @dataclass
 class UIElements:
     separator: str = f"\n{'='*35}\n"
+
+@dataclass
+class APIMessages:
+    api_original_morse_key: str = "original_morse"
+    api_translated_morse_key: str = "translated_morse"
+    api_original_text_key: str = "original_text"
+    api_translated_text_key: str = "translated_text"
+    api_error: str = "error"
+    api_morse_validation_check_key: str = "is_morse_valid"
+    api_status: str = "status"
+    api_health_ok: str = "ok"
