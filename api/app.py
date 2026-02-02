@@ -3,20 +3,25 @@ from core.converters import Converters
 from views.messages import AppName, APIMessages, ErrorMessages
 from utilities.utils import HelperFunctions
 from api.schemas import TextRequest, MorseRequest
+from api.routes.routes import MorseToText, TextToMorse, MorseValidation, Root, HealthCheck
+from api.routes.versions import CurrentVersion
 
 app = FastAPI()
 converter: Converters = Converters()
 
 # GET Routes
-@app.get('/')
+@app.get(CurrentVersion.current_version_route+Root.route)
 def root():
-    return {"message": AppName.app_name}
+    return {
+        "api_version": CurrentVersion.current_version_declaration,
+        "message": AppName.app_name
+        }
 
-@app.get('/health')
+@app.get(CurrentVersion.current_version_route+HealthCheck.route)
 def health_check():
     return {APIMessages.api_status: APIMessages.api_health_ok}
 
-@app.get('/morse-to-text/{morse}')
+@app.get(CurrentVersion.current_version_route+MorseToText.route+'/{morse}')
 def morse_to_text(morse: str):
     morse = morse.strip()
     if HelperFunctions.is_morse_valid(morse):
@@ -26,7 +31,7 @@ def morse_to_text(morse: str):
             }
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ErrorMessages.invalid_morse_input)
 
-@app.get('/text-to-morse/{text}')
+@app.get(CurrentVersion.current_version_route+TextToMorse.route+'/{text}')
 def text_to_morse(text: str):
     text = text.strip()
     if len(text) != 0:
@@ -36,7 +41,7 @@ def text_to_morse(text: str):
         }
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ErrorMessages.invalid_input)
 
-@app.get('/validate-morse/{morse}')
+@app.get(CurrentVersion.current_version_route+MorseValidation.route+'/{morse}')
 def validate_morse(morse: str):
     morse = morse.strip()
     return {
@@ -45,7 +50,7 @@ def validate_morse(morse: str):
     }
 
 # POST Routs
-@app.post('/morse-to-text')
+@app.post(CurrentVersion.current_version_route+MorseToText.route)
 def morse_to_text_post(body: MorseRequest):
     morse = body.morse.strip()
     if HelperFunctions.is_morse_valid(morse):
@@ -55,7 +60,7 @@ def morse_to_text_post(body: MorseRequest):
             }
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ErrorMessages.invalid_morse_input)
 
-@app.post('/text-to-morse')
+@app.post(CurrentVersion.current_version_route+TextToMorse.route)
 def text_to_morse_post(body: TextRequest):
     text = body.text.strip()
     if len(text) != 0:
@@ -65,7 +70,7 @@ def text_to_morse_post(body: TextRequest):
         }
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ErrorMessages.invalid_input)
 
-@app.post('/validate-morse')
+@app.post(CurrentVersion.current_version_route+MorseValidation.route)
 def validate_morse_post(body: MorseRequest):
     morse = body.morse.strip()
     return {
