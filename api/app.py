@@ -36,7 +36,7 @@ def text_to_morse(text: str):
 
 @app.get('/validate-morse/{morse}')
 def validate_morse(morse: str):
-    morse.strip()
+    morse = morse.strip()
     return {
         APIMessages.api_original_morse_key: morse,
         APIMessages.api_morse_validation_check_key: HelperFunctions.is_morse_valid(morse)
