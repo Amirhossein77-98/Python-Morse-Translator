@@ -2,6 +2,19 @@ import unittest
 from core.converters import Converters
 
 class ConvertersTest(unittest.TestCase):
+    """
+    Unit tests for the Converters class.
+    This test suite validates the functionality of text-to-morse and morse-to-text
+    conversion operations. It covers:
+    - Alphabetic characters (A-Z)
+    - Numeric characters (0-9)
+    - Punctuation marks (!@.,'!/()&:;=+-_"$)
+    - Single words
+    - Complete sentences with spaces and punctuation
+    The tests ensure bidirectional conversion accuracy and proper handling of
+    special characters, spaces, and mixed-case inputs.
+    """
+
     def setUp(self):
         self.converter = Converters()
 
