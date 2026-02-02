@@ -22,7 +22,7 @@ class Converters:
         self.morse_to_ascii_dict: dict[str, str] = {v: k for k, v in MorseCodeDataset.morse_dict.items()}
 
     def text_to_morse(self, text: str) -> str:
-        tokens: list[str] = HelperFunctions.string_tokenizer(text.upper(), ' ')
+        tokens: list[str] = HelperFunctions.string_tokenizer(text.upper().strip(), ' ')
         translated_tokens: list[str] = []
         for token in tokens:
             translated_chars: list[str] = []
@@ -30,13 +30,13 @@ class Converters:
                 try:
                     equivalent_morse_code: str = self.ascii_to_morse_dict[char]
                 except KeyError:
-                    equivalent_morse_code: str = "?"
+                    equivalent_morse_code: str = "#"
                 translated_chars.append(equivalent_morse_code)
             translated_tokens.append(" ".join(translated_chars))
         return " / ".join(translated_tokens)
     
     def morse_to_text(self, morse_code: str) -> str:
-        tokens: list[str] = HelperFunctions.string_tokenizer(morse_code, ' / ')
+        tokens: list[str] = HelperFunctions.string_tokenizer(morse_code.strip(), ' / ')
         translated_tokens: list[str] = []
         for token in tokens:
             translated_chars: list[str] = []
@@ -44,7 +44,7 @@ class Converters:
                 try:
                     equivalent_ascii_char: str = self.morse_to_ascii_dict[char]
                 except KeyError:
-                    equivalent_ascii_char: str = "?"
-                translated_chars.append(equivalent_ascii_char)
+                    equivalent_ascii_char: str = "#"
+                translated_chars.append(equivalent_ascii_char) if equivalent_ascii_char != "" else ""
             translated_tokens.append("".join(translated_chars))
         return " ".join(translated_tokens)

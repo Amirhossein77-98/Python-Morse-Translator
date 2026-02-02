@@ -32,7 +32,7 @@ class InteractiveCLIEnvironment:
         
         while True:
             try:
-                user_choice = int(input(MenuMessages.user_choice_input_msg).lstrip())
+                user_choice = int(input(MenuMessages.user_choice_input_msg).strip())
                 if user_choice in [1, 2, 3, 4]:
                     return user_choice
                 else:
@@ -53,7 +53,7 @@ class InteractiveCLIEnvironment:
             while True:
                 print(MenuMessages.morse_caution) if user_choice == 2 else ""
                 
-                user_input: str = input(MenuMessages.prompt_for_text if user_choice == 1 else MenuMessages.prompt_for_morse).lstrip()
+                user_input: str = input(MenuMessages.prompt_for_text if user_choice == 1 else MenuMessages.prompt_for_morse).strip()
                 
                 if user_choice == 1:
                     print("\n" + OutputMessages.original_text + user_input)

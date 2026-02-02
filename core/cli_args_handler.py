@@ -16,13 +16,13 @@ class ArgParser:
     
     def do_args_action(self, converter):
         if self.args.morse and HelperFunctions.is_morse_valid(self.args.morse):
-            print(OutputMessages.original_morse + self.args.morse)
-            print(OutputMessages.translated_text + converter.morse_to_text(self.args.morse).title() + "\n")
+            print(OutputMessages.original_morse + self.args.morse.strip())
+            print(OutputMessages.translated_text + converter.morse_to_text(self.args.morse.strip()).title() + "\n")
         elif self.args.text:
-            print(OutputMessages.original_text + self.args.text)
-            print(OutputMessages.translated_morse + converter.text_to_morse(self.args.text) + "\n")
+            print(OutputMessages.original_text + self.args.text.strip())
+            print(OutputMessages.translated_morse + converter.text_to_morse(self.args.text.strip()) + "\n")
         elif self.args.validate_morse:
-            print(OutputMessages.valid_morse if HelperFunctions.is_morse_valid(self.args.validate_morse) else OutputMessages.invalid_morse)
+            print(OutputMessages.valid_morse if HelperFunctions.is_morse_valid(self.args.validate_morse.strip()) else OutputMessages.invalid_morse)
         else:
             print(ErrorMessages.invalid_input)
     
