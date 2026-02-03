@@ -1,10 +1,10 @@
 
 # Morse-Translator
-A compact, installable Morse Code ⇄ Text translator (CLI + FastAPI). This repo provides:
+A compact, installable Morse Code ⇄ Text translator (CLI + FastAPI + GUI). This repo provides:
 
 - Bidirectional conversions between text and Morse code (letters, numbers, common punctuation).
 - Validation utilities to ensure Morse input follows allowed characters and token rules.
-- An interactive CLI, an installable `morse` CLI entry point, and an HTTP API (FastAPI) with versioned routes.
+- An interactive CLI, an installable `morse` CLI entry point, an HTTP API (FastAPI) with versioned routes, and a Graphical User Interface usin `customtkinter`.
 
 This README covers features, packaging and installability, CLI usage, API endpoints (with examples), development and testing instructions.
 
