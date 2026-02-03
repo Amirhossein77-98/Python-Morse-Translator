@@ -1,6 +1,6 @@
 [project]
 name = "morse-translator"
-version = "0.1.0"
+version = "0.1.1"
 description = "Morse Code ⇄ Text translator (CLI + FastAPI) — bidirectional conversions, validation utilities, and tests."
 readme = "README.md"
 requires-python = ">=3.13"
@@ -13,4 +13,7 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["api*", "core*", "data*", "views*", "utilities*"]
+include = ["api*", "core*", "data*", "views*", "utilities*", "morse_cli*"]
+
+[project.scripts]
+morse = "morse_cli.cli:main"
