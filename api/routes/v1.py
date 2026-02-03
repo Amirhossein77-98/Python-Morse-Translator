@@ -1,3 +1,34 @@
+"""
+API routes for Morse code translation and validation.
+
+This module defines FastAPI route handlers for converting between text and Morse code,
+as well as validating Morse code input. It provides both GET and POST endpoints for
+each operation.
+
+Routes:
+    GET /: Returns API version and application name
+    GET /health: Health check endpoint
+    GET /morse-to-text/{morse}: Convert Morse code to text (path parameter)
+    GET /text-to-morse/{text}: Convert text to Morse code (path parameter)
+    GET /validate-morse/{morse}: Validate Morse code format (path parameter)
+    POST /morse-to-text: Convert Morse code to text (request body)
+    POST /text-to-morse: Convert text to Morse code (request body)
+    POST /validate-morse: Validate Morse code format (request body)
+
+Module Attributes:
+    router (APIRouter): FastAPI router instance with versioned prefix and tags
+    converter (Converters): Instance of Converters for text/Morse transformations
+
+Dependencies:
+    - fastapi: Web framework
+    - core.converters: Morse/text conversion logic
+    - views.messages: Message templates and constants
+    - utilities.utils: Helper functions for validation
+    - api.schemas: Request/response schemas
+    - api.routes.routes: Route constants
+    - api.routes.versions: API version information
+"""
+
 from fastapi import APIRouter, HTTPException, status
 from core.converters import Converters
 from views.messages import AppName, APIMessages, ErrorMessages

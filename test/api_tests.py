@@ -6,6 +6,18 @@ from api.routes.routes import MorseToText, TextToMorse, MorseValidation, Root, H
 from api.routes.versions import CurrentVersion
 
 class APITest(unittest.TestCase):
+    """
+    Unit tests for the Morse Translator API endpoints.
+    This test class validates the functionality of GET and POST routes for:
+    - Converting morse code to text
+    - Converting text to morse code
+    - Validating morse code patterns
+    The tests verify:
+    - Successful translations with correct status codes and response formats
+    - Proper error handling for invalid inputs
+    - Response JSON structure contains expected keys
+    - Translated values match expected results
+    """
     def setUp(self):
         self.client = TestClient(app)
         
