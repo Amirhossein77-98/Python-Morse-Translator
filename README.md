@@ -16,6 +16,8 @@ This README covers features, packaging and installability, CLI usage, API endpoi
 - Morse → Text: converts Morse code back to ASCII text; unknown tokens become `#`.
 - Validation: checks Morse strings for allowed characters (only `.`, `-`, ` `, `/`) and token length rules.
 - Interactive CLI: `main.py` provides a menu-driven interactive experience.
+ - Interactive CLI: `main.py` provides a menu-driven interactive experience.
+ - Desktop GUI: a `customtkinter`-based GUI is available and can be launched with the `-ui` / `--user_interface` CLI flag (see CLI Usage).
 - CLI flags: single-shot conversions from the command line.
 - Installable package: the project is packaged with an entry point (`morse`) so you can install with `pip install -e .` and use `morse` directly.
 - HTTP API: FastAPI app with versioned routes (prefixed with `/v1`).
@@ -155,6 +157,18 @@ Notes:
 
 - Use ` / ` (space-slash-space) to separate words in Morse. Use a single space to separate characters.
 - CLI flags are mutually exclusive — use only one flag per invocation.
+
+GUI:
+
+- Launch the desktop GUI with:
+
+```bash
+python3 main.py -ui
+```
+
+The same flag is exposed via the package entry point after installation (`morse -ui`) if you installed the project in development mode.
+
+The GUI depends on `customtkinter`; install it in your environment if you plan to run the GUI directly.
 
 ---
 
