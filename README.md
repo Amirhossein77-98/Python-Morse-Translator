@@ -1,11 +1,12 @@
+
 # Morse-Translator
-A compact Morse Code ⇄ Text translator (CLI + FastAPI). This repo provides:
+A compact, installable Morse Code ⇄ Text translator (CLI + FastAPI). This repo provides:
 
 - Bidirectional conversions between text and Morse code (letters, numbers, common punctuation).
 - Validation utilities to ensure Morse input follows allowed characters and token rules.
-- A small interactive CLI plus an HTTP API (FastAPI) with versioned routes.
+- An interactive CLI, an installable `morse` CLI entry point, and an HTTP API (FastAPI) with versioned routes.
 
-This README covers features, CLI usage, API endpoints (with examples), development and testing instructions.
+This README covers features, packaging and installability, CLI usage, API endpoints (with examples), development and testing instructions.
 
 ---
 
@@ -16,6 +17,7 @@ This README covers features, CLI usage, API endpoints (with examples), developme
 - Validation: checks Morse strings for allowed characters (only `.`, `-`, ` `, `/`) and token length rules.
 - Interactive CLI: `main.py` provides a menu-driven interactive experience.
 - CLI flags: single-shot conversions from the command line.
+- Installable package: the project is packaged with an entry point (`morse`) so you can install with `pip install -e .` and use `morse` directly.
 - HTTP API: FastAPI app with versioned routes (prefixed with `/v1`).
 
 ---
@@ -42,6 +44,22 @@ pip install fastapi uvicorn httpx requests
 ```
 
 Note: the project includes `pyproject.toml` listing required packages.
+
+**Installing as a package (development mode):**
+
+To install the project in development mode with the `morse` CLI entry point available globally in your venv:
+
+```bash
+pip install -e .
+```
+
+Then you can run single-shot conversions via the `morse` command (instead of `python3 main.py`):
+
+```bash
+morse -t "Hello World"
+morse -m ".... . .-.. .-.. --- / .-- --- .-. .-.. -.."
+morse -vm ".... . .-.. .-.. ---"
+```
 
 Alternative venv workflows
 
@@ -279,6 +297,27 @@ Notes:
 - The FastAPI app is defined in `api/app.py` and registers routes from `api/routes/v1.py`.
 - Route constants and versioning live in `api/routes/routes.py` and `api/routes/versions.py`.
 - Conversion logic is in `core/converters.py` and uses the dataset in `data/morse_dataset.py`.
+
+---
+
+## Packaging
+
+This project is packaged with `setuptools` via `pyproject.toml`. The `morse_cli` module defines a CLI entry point so you can install and use the `morse` command globally:
+
+```bash
+pip install -e .
+```
+
+After installation, the `morse` command becomes available in your virtual environment and routes to `morse_cli.cli:main`.
+
+To build distribution packages (wheel and source distribution):
+
+```bash
+pip install build
+python -m build
+```
+
+Distribution artifacts are created in the `dist/` folder.
 
 ---
 
