@@ -22,7 +22,7 @@ def main():
     
     print(f"\n{'*'*5} {AppName.app_name} {'*'*5} \n")
     
-    if args.morse or args.text or args.validate_morse:
+    if args.morse or args.text or args.validate_morse or args.user_interface:
         if (ArgParser.is_cli_args_valid(args)):
             arg_parser.do_args_action(converter)
         else:
