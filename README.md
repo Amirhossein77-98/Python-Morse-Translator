@@ -339,6 +339,16 @@ Distribution artifacts are created in the `dist/` folder.
 
 - Bug reports and PRs are welcome. Please open an issue with repro steps and testcases.
 
+## Screenshots
+
+<div style="display:flex; gap:12px; overflow-x:auto; padding:12px 0;">
+  <img src="screenshots/1.png" alt="App screenshot 1" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+  <img src="screenshots/2.png" alt="App screenshot 2" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+  <img src="screenshots/3.png" alt="App screenshot 3" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+  <img src="screenshots/4.png" alt="App screenshot 4" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+  <img src="screenshots/5.png" alt="App screenshot 5" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+</div>
+
 ---
 
 ## License
