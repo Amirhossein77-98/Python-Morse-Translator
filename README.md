@@ -11,12 +11,18 @@ A compact, feature-rich Morse Code ⇄ Text translator with CLI, GUI, and REST A
 
 ## 📸 Screenshots
 
-<div style="display:flex; gap:12px; overflow-x:auto; padding:12px 0;">
-  <img src="screenshots/1.png" alt="GUI screenshot 1" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
-  <img src="screenshots/2.png" alt="GUI screenshot 2" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
-  <img src="screenshots/3.png" alt="GUI screenshot 3" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
-  <img src="screenshots/4.png" alt="GUI screenshot 4" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
-  <img src="screenshots/5.png" alt="GUI screenshot 5" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+<div style="
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:12px 0;
+  flex-wrap:nowrap;
+">
+  <img src="screenshots/1.png" style="max-height:420px; flex:0 0 auto;">
+  <img src="screenshots/2.png" style="max-height:420px; flex:0 0 auto;">
+  <img src="screenshots/3.png" style="max-height:420px; flex:0 0 auto;">
+  <img src="screenshots/4.png" style="max-height:420px; flex:0 0 auto;">
+  <img src="screenshots/5.png" style="max-height:420px; flex:0 0 auto;">
 </div>
 
 ---
