@@ -4,8 +4,8 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![FastAPI](https://img.shields.io/badge/fastapi-latest-009485.svg)](https://fastapi.tiangolo.com/)
 
-- [نسخه فارسی سند](../docs/README.fa.md)\
-- [English Version of the Doc](../README.md)\
+- [نسخه فارسی سند](../docs/README.fa.md)
+- [English Version of the Doc](../README.md)
 - [Version française du document](../docs/README.fr.md)
 
 مترجم مدمج وغني بالميزات لتحويل شفرة مورس ⇄ نص مع واجهة سطر أوامر CLI وواجهة رسومية GUI وواجهة برمجة تطبيقات REST. تحويلات ثنائية الاتجاه للحروف والأرقام وعلامات الترقيم الشائعة مع تحقق مدمج.
