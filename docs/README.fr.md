@@ -3,6 +3,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Licence MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![FastAPI](https://img.shields.io/badge/fastapi-latest-009485.svg)](https://fastapi.tiangolo.com/)
+![CI](https://github.com/<username>/<repo>/actions/workflows/ci.yml/badge.svg)
 
 - [English Version of the Doc](../README.md)
 - [نسخه فارسی سند](../docs/README.fa.md)
