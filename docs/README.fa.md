@@ -3,6 +3,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![FastAPI](https://img.shields.io/badge/fastapi-latest-009485.svg)](https://fastapi.tiangolo.com/)
+[![PyPI version](https://img.shields.io/pypi/v/amirstein-morse-translator.svg)](https://pypi.org/project/amirstein-morse-translator/)
 ![CI](https://github.com/Amirhossein77-98/Morse-Translator/actions/workflows/ci.yml/badge.svg)
 
 - [النسخة العربية من المستند](../docs/README.ar.md)
