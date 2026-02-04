@@ -4,8 +4,8 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![FastAPI](https://img.shields.io/badge/fastapi-latest-009485.svg)](https://fastapi.tiangolo.com/)
 
-[النسخة العربية من المستند](../docs/README.ar.md)
-[English Version of the Doc](../README.md)
+[النسخة العربية من المستند](../docs/README.ar.md)\
+[English Version of the Doc](../README.md)\
 [Version française du document](../docs/README.fr.md)
 
 یک مترجم مختصر و پر امکانات کد مورس ⇄ متن با رابط خط فرمان، رابط گرافیکی و رابط REST API. تبدیل دو طرفه برای حروف، 

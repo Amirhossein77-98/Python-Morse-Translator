@@ -4,6 +4,10 @@
 [![Licence MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![FastAPI](https://img.shields.io/badge/fastapi-latest-009485.svg)](https://fastapi.tiangolo.com/)
 
+[English Version of the Doc](../README.md)
+[نسخه فارسی سند](../docs/README.fa.md)\
+[النسخة العربية من المستند](../docs/README.ar.md)\
+
 Un traducteur Code Morse ⇄ Texte compact et riche en fonctionnalités avec CLI, GUI et API REST. Conversions bidirectionnelles pour lettres, chiffres et ponctuation courante avec validation intégrée.
 
 ---
