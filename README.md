@@ -1,358 +1,191 @@
 
 # Morse-Translator
-A compact, installable Morse Code ⇄ Text translator (CLI + FastAPI + GUI). This repo provides:
 
-- Bidirectional conversions between text and Morse code (letters, numbers, common punctuation).
-- Validation utilities to ensure Morse input follows allowed characters and token rules.
-- An interactive CLI, an installable `morse` CLI entry point, an HTTP API (FastAPI) with versioned routes, and a Graphical User Interface usin `customtkinter`.
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![FastAPI](https://img.shields.io/badge/fastapi-latest-009485.svg)](https://fastapi.tiangolo.com/)
 
-This README covers features, packaging and installability, CLI usage, API endpoints (with examples), development and testing instructions.
-
----
-
-## Features
-
-- Text → Morse: converts ASCII text (letters A–Z, digits 0–9, common punctuation) to Morse code.
-- Morse → Text: converts Morse code back to ASCII text; unknown tokens become `#`.
-- Validation: checks Morse strings for allowed characters (only `.`, `-`, ` `, `/`) and token length rules.
-- Interactive CLI: `main.py` provides a menu-driven interactive experience.
- - Interactive CLI: `main.py` provides a menu-driven interactive experience.
- - Desktop GUI: a `customtkinter`-based GUI is available and can be launched with the `-ui` / `--user_interface` CLI flag (see CLI Usage).
-- CLI flags: single-shot conversions from the command line.
-- Installable package: the project is packaged with an entry point (`morse`) so you can install with `pip install -e .` and use `morse` directly.
-- HTTP API: FastAPI app with versioned routes (prefixed with `/v1`).
+A compact, feature-rich Morse Code ⇄ Text translator with CLI, GUI, and REST API. Bidirectional conversions for letters, numbers, and common punctuation with built-in validation.
 
 ---
 
-## Installation
+## 📸 Screenshots
 
-1. Create a virtual environment and activate it (recommended):
+<div style="display:flex; gap:12px; overflow-x:auto; padding:12px 0;">
+  <img src="screenshots/1.png" alt="GUI screenshot 1" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+  <img src="screenshots/2.png" alt="GUI screenshot 2" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+  <img src="screenshots/3.png" alt="GUI screenshot 3" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+  <img src="screenshots/4.png" alt="GUI screenshot 4" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+  <img src="screenshots/5.png" alt="GUI screenshot 5" style="max-height:380px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+</div>
+
+---
+
+## 🚀 Features
+
+- **Text ↔ Morse**: bidirectional conversion for A–Z, 0–9, and common punctuation
+- **Validation**: checks Morse syntax (allowed: `.`, `-`, `/`, space; max 6 chars per token)
+- **Interactive CLI**: menu-driven experience via `main.py`
+- **Desktop GUI**: responsive `customtkinter`-based UI with text/Morse input fields and toggle switch
+- **REST API**: FastAPI with versioned routes (`/v1`) and interactive docs at `/docs`
+- **Installable package**: global `morse` command after `pip install -e .`
+- **CLI flags**: single-shot conversions (`-t`, `-m`, `-vm`, `-ui`)
+
+---
+
+## 📦 Installation
+
+1. **Clone and create virtual environment:**
 
 ```bash
+git clone https://github.com/amirhossein77-98/Morse-Translator.git
+cd Morse-Translator
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
-2. Install dependencies:
-
-```bash
-pip install -r <(python - <<'PY'
-from pathlib import Path
-print('\n'.join([s.split('=')[0].strip().strip('"') for s in Path('pyproject.toml').read_text().splitlines() if 'dependencies' in s or s.strip().startswith('"')]))
-PY
-)
-# Or install explicitly:
-pip install fastapi uvicorn httpx requests
-```
-
-Note: the project includes `pyproject.toml` listing required packages.
-
-**Installing as a package (development mode):**
-
-To install the project in development mode with the `morse` CLI entry point available globally in your venv:
+2. **Install dependencies:**
 
 ```bash
 pip install -e .
 ```
 
-Then you can run single-shot conversions via the `morse` command (instead of `python3 main.py`):
+Installs the project in development mode with the global `morse` CLI entry point.
 
-```bash
-morse -t "Hello World"
-morse -m ".... . .-.. .-.. --- / .-- --- .-. .-.. -.."
-morse -vm ".... . .-.. .-.. ---"
-```
-
-Alternative venv workflows
-
-- Using the `uv` tool: if you initialized this project with the `uv` utility and used it to create the virtual environment (for example via an `uv` init or project setup command), the venv is typically created in a `.venv` folder inside the project. Activate that venv the same way shown below for your shell (the activation commands match the venv location `./.venv`).
-
-- Using `pipenv`:
-
-```bash
-pipenv install --dev
-pipenv shell
-```
-
-- Using `poetry`:
-
-```bash
-poetry install
-poetry shell
-```
-
-Activating the `.venv` (common shells and platforms)
-
-- Linux / macOS (bash, zsh):
-
-```bash
-source .venv/bin/activate
-```
-
-- macOS (fish shell):
-
-```fish
-source .venv/bin/activate.fish
-```
-
-- Windows (PowerShell):
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-- Windows (Command Prompt):
-
-```cmd
-.venv\Scripts\activate.bat
-```
-
-- Git Bash / MinGW on Windows:
-
-```bash
-source .venv/Scripts/activate
-```
-
-If your venv was created in a different location by `uv` or another tool, adjust the path accordingly (for example `path/to/env/bin/activate` or `path\to\env\Scripts\activate`).
+**Alternative environments:**
+- **pipenv:** `pipenv install --dev && pipenv shell`
+- **poetry:** `poetry install && poetry shell`
+- **uv:** `uv sync` (if initialized with uv)
 
 ---
 
-## Running the API server
+## 🖥 Usage
 
-Start the FastAPI server locally with Uvicorn:
+### Direct run
+
+**Interactive menu:**
+```bash
+python3 main.py
+```
+
+### CLI args
+
+All flags are mutually exclusive. Use ` / ` (space-slash-space) to separate words in Morse.
+
+**Text to Morse:**
+```bash
+python3 main.py -t "Hello World"
+morse -t "Hello World"  # After pip install -e .
+```
+
+**Morse to Text:**
+```bash
+python3 main.py -m ".... . .-.. .-.. --- / .-- --- .-. .-.. -.."
+```
+
+**Validate Morse:**
+```bash
+python3 main.py -vm ".... . .-.. .-.. ---"
+```
+
+### GUI
+
+Launch the responsive `customtkinter` GUI:
+
+```bash
+python3 main.py -ui
+morse -ui  # After pip install -e .
+```
+
+**Features:**
+- Toggle between "Text to Morse" and "Morse to Text" via switch
+- Real-time input/output textboxes
+- Validation for Morse input
+- Responsive grid layout, centered widgets
+
+### API
+
+Start the FastAPI server:
 
 ```bash
 uvicorn api.app:app --reload
 ```
 
-The API will be reachable at `http://127.0.0.1:8000` and the interactive API docs at `http://127.0.0.1:8000/docs`.
+Open `http://127.0.0.1:8000/docs` for interactive API docs.
 
-Routes are versioned under `/v1` (e.g. `/v1/morse-to-text`). See the API examples below.
-
----
-
-## CLI Usage (single-shot)
-
-Run a one-off translation from the command line:
-
-- Text to Morse:
+**Example endpoints** (base: `/v1`):
 
 ```bash
-python3 main.py -t "Hello World"
+# GET
+curl "http://127.0.0.1:8000/v1/text-to-morse/hello"
+curl "http://127.0.0.1:8000/v1/morse-to-text/--"
+curl "http://127.0.0.1:8000/v1/validate-morse/--"
+
+# POST
+curl -X POST "http://127.0.0.1:8000/v1/text-to-morse" \
+  -H "Content-Type: application/json" \
+  -d '{"text":"hello"}'
 ```
 
-- Morse to Text:
-
-```bash
-python3 main.py -m ".... . .-.. .-.. --- / .-- --- .-. .-.. -.."
-```
-
-- Validate Morse:
-
-```bash
-python3 main.py -vm ".... . .-.. .-.. ---"
-```
-
-Notes:
-
-- Use ` / ` (space-slash-space) to separate words in Morse. Use a single space to separate characters.
-- CLI flags are mutually exclusive — use only one flag per invocation.
-
-GUI:
-
-- Launch the desktop GUI with:
-
-```bash
-python3 main.py -ui
-```
-
-The same flag is exposed via the package entry point after installation (`morse -ui`) if you installed the project in development mode.
-
-The GUI depends on `customtkinter`; install it in your environment if you plan to run the GUI directly.
-
----
-
-## API Endpoints and Examples
-
-Base path: `/v1`
-
-1) GET /v1/morse-to-text/{morse}
-
-Example request (curl):
-
-```bash
-curl -s "http://127.0.0.1:8000/v1/morse-to-text/--"
-```
-
-Successful response (200):
-
-```json
-{"original_morse":"--","translated_morse":"M"}
-```
-
-Invalid input returns `400` with an error detail.
-
-2) GET /v1/text-to-morse/{text}
-
-```bash
-curl -s "http://127.0.0.1:8000/v1/text-to-morse/hello"
-```
-
-Response (200):
-
-```json
-{"original_text":"hello","translated_text":".... . .-.. .-.. ---"}
-```
-
-3) GET /v1/validate-morse/{morse}
-
-```bash
-curl -s "http://127.0.0.1:8000/v1/validate-morse/--"
-```
-
-Response (200):
-
-```json
-{"original_morse":"--","is_morse_valid":true}
-```
-
-4) POST endpoints (JSON body)
-
-- POST /v1/morse-to-text
-
-Request body:
-
-```json
-{"morse": "-- --- .-. ... . / .. ... / ..-. ..- -."}
-```
-
-Response (200):
-
+Response format:
 ```json
 {
-  "original_morse": "-- --- .-. ... . / .. ... / ..-. ..- -.",
-  "translated_morse": "MORSE IS FUN"
+  "original_text": "hello",
+  "translated_text": ".... . .-.. .-.. ---"
 }
 ```
 
-- POST /v1/text-to-morse
+### Installable `morse` package
 
-Request body:
-
-```json
-{"text": "Hello World!"}
-```
-
-Response (200):
-
-```json
-{
-  "original_text": "Hello World!",
-  "translated_text": ".... . .-.. .-.. --- / .-- --- .-. .-.. -.. -.-.--"
-}
-```
-
-- POST /v1/validate-morse
-
-Request body:
-
-```json
-{"morse": ".. -.- .- -.-- / -... --- -.. -.-- .-.-.-"}
-```
-
-Response (200):
-
-```json
-{
-  "original_morse": ".. -.- .- -.-- / -... --- -.. -.-- .-.-.-",
-  "is_morse_valid": true
-}
-```
-
-Invalid POST inputs return `400` (or `200` with `is_morse_valid: false` for validation checks depending on the endpoint behavior).
-
----
-
-## Validation Rules
-
-- Allowed characters in Morse input: `.`, `-`, `/`, and space.
-- Each token (space-separated) must not exceed 6 characters.
-- Tokens starting with `/` must be exactly `/` (used as a word separator).
-
-The validator lives in `utilities/utils.py` as `HelperFunctions.is_morse_valid`.
-
----
-
-## Testing
-
-Unit tests are under the `test/` directory and use `unittest` and FastAPI's `TestClient` for API tests.
-
-Run all tests:
+After `pip install -e .`, use the global `morse` command:
 
 ```bash
-python3 -m unittest discover -v
+morse -t "Hello"
+morse -m ".... . .-.. .-.. ---"
+morse -vm "..."
+morse -ui
 ```
-
-Run a single test file:
-
-```bash
-python3 -m unittest test.api_tests
-```
-
-Notes:
-
-- API tests use `TestClient` so you do not need to run the server to execute them.
-- If you encounter unexpected failures, ensure no stray invisible Unicode characters are present in test strings (zero-width characters can cause string mismatches).
 
 ---
 
-## Development notes
+## 🔧 Testing
 
-- The FastAPI app is defined in `api/app.py` and registers routes from `api/routes/v1.py`.
-- Route constants and versioning live in `api/routes/routes.py` and `api/routes/versions.py`.
-- Conversion logic is in `core/converters.py` and uses the dataset in `data/morse_dataset.py`.
+Run unit and API tests (no server startup needed):
+
+```bash
+python3 -m unittest discover -v        # All tests
+python3 -m unittest test.api_tests     # API only
+python3 -m unittest test.converter_tests  # Converter only
+```
+
+**Note:** Tests use `unittest` and FastAPI `TestClient`. Ensure no stray Unicode characters in test strings.
 
 ---
 
-## Packaging
+## 🛠 Packaging & Contributing
 
-This project is packaged with `setuptools` via `pyproject.toml`. The `morse_cli` module defines a CLI entry point so you can install and use the `morse` command globally:
-
-```bash
-pip install -e .
-```
-
-After installation, the `morse` command becomes available in your virtual environment and routes to `morse_cli.cli:main`.
-
-To build distribution packages (wheel and source distribution):
+**Build distribution packages:**
 
 ```bash
 pip install build
 python -m build
 ```
 
-Distribution artifacts are created in the `dist/` folder.
+Creates wheels and source distributions in `dist/`.
+
+**Project structure:**
+- `core/converters.py` — conversion logic & validation
+- `data/morse_dataset.py` — Morse/ASCII mapping
+- `api/app.py` — FastAPI application
+- `api/routes/v1.py` — versioned endpoints
+- `views/ui/ctkinter_ui.py` — GUI with `customtkinter`
+- `test/` — unit and API tests
+
+**Contributing:**
+Bug reports and PRs welcome. Please include repro steps and test cases.
 
 ---
 
-## Contributing
+## 📜 License
 
-- Bug reports and PRs are welcome. Please open an issue with repro steps and testcases.
-
-## Screenshots
-
-<div style="display:flex; gap:12px; overflow-x:auto; padding:12px 0;">
-  <img src="screenshots/1.png" alt="App screenshot 1" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
-  <img src="screenshots/2.png" alt="App screenshot 2" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
-  <img src="screenshots/3.png" alt="App screenshot 3" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
-  <img src="screenshots/4.png" alt="App screenshot 4" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
-  <img src="screenshots/5.png" alt="App screenshot 5" style="max-height:420px; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
-</div>
-
----
-
-## License
-
-- MIT License
-
----
+MIT License — see [LICENSE](LICENSE) for details.
