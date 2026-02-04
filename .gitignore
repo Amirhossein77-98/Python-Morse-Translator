@@ -9,3 +9,5 @@ dist/
 
 # Virtual env
 .venv/
+
+ctkinter_ui.spec

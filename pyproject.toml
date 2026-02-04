@@ -19,5 +19,10 @@ dependencies = [
 where = ["."]
 include = ["api*", "core*", "data*", "views*", "utilities*", "morse_cli*"]
 
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.18.0",
+]
+
 [project.scripts]
 morse = "morse_cli.cli:main"
