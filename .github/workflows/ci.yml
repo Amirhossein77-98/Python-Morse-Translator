@@ -20,3 +20,5 @@ jobs:
       - run: uv pip install --system -e .
       - run: uv pip install --system pytest
       - run: pytest test/api_tests.py
+      - run: pytest test/converter_tests.py
+      - run: pytest test/utils_tests.py
