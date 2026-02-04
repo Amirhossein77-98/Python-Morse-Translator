@@ -217,33 +217,36 @@ class App(ctk.CTk):
                 return ErrorMessages.invalid_morse_input
 
     def online_translator(self, input_text: str) -> str:
-        import requests
-        base_url: str = "http://127.0.0.1:8000/v1/"
-        if self.operation_type_switch_var.get() == ThemeConstants.switch_keys["ttm"]:
-            url_param: str = ThemeConstants.switch_keys["ttm"]
-            result = requests.post(
-                url=base_url+url_param,
-                json={"text": input_text}
-            )
-            result_json = result.json()
-            if result.status_code == 200:
-                return result_json[APIMessages.api_translated_text_key]
-            else:
-                return result_json["detail"]
-        else:
-            if HelperFunctions.is_morse_valid(input_text):
-                url_param: str = ThemeConstants.switch_keys["mtt"]
+        try:
+            import requests
+            base_url: str = "http://127.0.0.1:8000/v1/"
+            if self.operation_type_switch_var.get() == ThemeConstants.switch_keys["ttm"]:
+                url_param: str = ThemeConstants.switch_keys["ttm"]
                 result = requests.post(
                     url=base_url+url_param,
-                    json={"morse": input_text}
+                    json={"text": input_text}
                 )
                 result_json = result.json()
                 if result.status_code == 200:
-                    return result_json[APIMessages.api_translated_morse_key]
+                    return result_json[APIMessages.api_translated_text_key]
                 else:
                     return result_json["detail"]
             else:
-                return ErrorMessages.invalid_morse_input
+                if HelperFunctions.is_morse_valid(input_text):
+                    url_param: str = ThemeConstants.switch_keys["mtt"]
+                    result = requests.post(
+                        url=base_url+url_param,
+                        json={"morse": input_text}
+                    )
+                    result_json = result.json()
+                    if result.status_code == 200:
+                        return result_json[APIMessages.api_translated_morse_key]
+                    else:
+                        return result_json["detail"]
+                else:
+                    return ErrorMessages.invalid_morse_input
+        except requests.exceptions.ConnectionError:
+            return "Connection Refused. Make sure API in On."
 
     def change_theme(self, choice):
         ctk.set_appearance_mode(choice)
