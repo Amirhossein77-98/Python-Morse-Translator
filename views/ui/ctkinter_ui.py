@@ -4,6 +4,10 @@ from core.converters import Converters
 from utilities.utils import HelperFunctions
 from views.messages import ErrorMessages, APIMessages
 from dataclasses import dataclass
+import threading
+import subprocess
+import requests
+
 
 @dataclass
 class GUIConstants:
@@ -125,13 +129,13 @@ class App(ctk.CTk):
         height=90,
         font=GUIConstants.other_font,
         corner_radius=50,
-        command=self.transate_button)
+        command=self.fire_translate)
         self.translate_button.grid(row=4, column=1, sticky="n")
 
         self.bottom_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.bottom_frame.grid(row=5, column=0, columnspan=3, sticky="ew")
         self.bottom_frame.grid_rowconfigure(0, weight=0)
-        self.bottom_frame.grid_rowconfigure(1, weight=0)
+        self.bottom_frame.grid_rowconfigure(1, weight=1)
         self.bottom_frame.grid_columnconfigure(0, weight=1)
         self.bottom_frame.grid_columnconfigure(1, weight=1)
         self.bottom_frame.grid_columnconfigure(2, weight=1)
@@ -191,7 +195,7 @@ class App(ctk.CTk):
         self.theme_selection_menu.grid(row=1,column=2, padx=(0, 20), sticky="se")
 
 
-    def transate_button(self):
+    def fire_translate(self):
         input_text = self.input_field.get("1.0", "end").strip()
         if not input_text or input_text == f"Enter your text here...{chr(0x200B)}":
             result = ""
@@ -218,13 +222,13 @@ class App(ctk.CTk):
 
     def online_translator(self, input_text: str) -> str:
         try:
-            import requests
             base_url: str = "http://127.0.0.1:8000/v1/"
             if self.operation_type_switch_var.get() == GUIConstants.switch_keys["ttm"]:
                 url_param: str = GUIConstants.switch_keys["ttm"]
                 result = requests.post(
                     url=base_url+url_param,
-                    json={"text": input_text}
+                    json={"text": input_text},
+                    timeout=5
                 )
                 result_json = result.json()
                 if result.status_code == 200:
@@ -236,7 +240,8 @@ class App(ctk.CTk):
                     url_param: str = GUIConstants.switch_keys["mtt"]
                     result = requests.post(
                         url=base_url+url_param,
-                        json={"morse": input_text}
+                        json={"morse": input_text},
+                        timeout=5
                     )
                     result_json = result.json()
                     if result.status_code == 200:
@@ -283,11 +288,10 @@ class App(ctk.CTk):
             self.input_field.configure(text_color=("gray", "gray"))
         
     def change_translation_mode(self, mode):
-        self.translation_mode_var = ctk.StringVar(value=mode)
+        self.translation_mode_var.set(mode)
 
 
     def change_api_state(self):
-        import threading
         if self.api_switcher_var.get() == GUIConstants.api_states[0]:
             threading.Thread(target=self.start_api, daemon=True).start()
         else:
@@ -295,31 +299,37 @@ class App(ctk.CTk):
 
 
     def start_api(self):
-        import subprocess
+        if hasattr(self, "api_process") and self.api_process:
+            self.api_switch.select()
+            self.api_switch_label.configure(text=f"API State: {self.api_switcher_var.get().title()}")
+            return
         
         try:
             self.api_process = subprocess.Popen(
-                ["uvicorn", "api.app:app", "--reload"],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                ["uvicorn", "api.app:app"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
                 text=True
             )
             print("API started")
             self.api_switch_label.configure(text=f"API State: {self.api_switcher_var.get().title()}")
         except Exception as e:
             print("Failed to start API:", e)
-            self.api_switcher_var = GUIConstants.api_states[1]
+            self.api_switcher_var.set(GUIConstants.api_states[1])
             self.api_switch.deselect()
+            self.api_switch_label.configure(text=f"API State: {self.api_switcher_var.get().title()}")
+
 
     def api_stopper(self):
         if hasattr(self, "api_process") and self.api_process:
             self.api_process.terminate()
             self.api_process = None
             print("API stopped")
-            self.api_switch_label.configure(text=f"API State: {self.api_switcher_var.get().title()}")
 
     def stop_api(self):
         self.api_stopper()
+        self.api_switch_label.configure(text=f"API State: {self.api_switcher_var.get().title()}")
+
 
     def on_closing(self):
         self.api_stopper()
