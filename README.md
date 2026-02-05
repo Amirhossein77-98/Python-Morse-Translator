@@ -7,9 +7,9 @@
 [![PyPI version](https://img.shields.io/pypi/v/amirstein-morse-translator.svg)](https://pypi.org/project/amirstein-morse-translator/)
 ![CI](https://github.com/Amirhossein77-98/Morse-Translator/actions/workflows/ci.yml/badge.svg)
 
-- [نسخه فارسی سند](../docs/README.fa.md)
-- [النسخة العربية من المستند](../docs/README.ar.md)
-- [Version française du document](../docs/README.fr.md)
+- [نسخه فارسی سند](../main/docs/README.fa.md)
+- [النسخة العربية من المستند](../main/docs/README.ar.md)
+- [Version française du document](../main/docs/README.fr.md)
 
 A compact, feature-rich Morse Code ⇄ Text translator with CLI, GUI, and REST API. Bidirectional conversions for letters, numbers, and common punctuation with built-in validation.
 
