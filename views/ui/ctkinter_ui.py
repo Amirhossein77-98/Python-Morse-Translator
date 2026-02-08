@@ -11,11 +11,7 @@ import requests
 
 @dataclass
 class GUIConstants:
-    app_font_family: str = "Arial"
-    title_font: tuple = (app_font_family, 60, "bold")
-    switch_font: tuple = (app_font_family, 35)
-    io_font: tuple = (app_font_family, 30)
-    other_font: tuple = (app_font_family, 25)
+    
     theme_values = ["System", "Dark", "Light"]
     translation_mode_values = ["Direct", "API"]
     api_states = ["on", "off"]
@@ -53,11 +49,35 @@ class App(ctk.CTk):
         
         ctk.set_appearance_mode(GUIConstants.theme_values[0])
         ctk.set_default_color_theme(GUIConstants.default_color_theme)
+
+        screen_w = self.winfo_screenwidth()
+        screen_h = self.winfo_screenheight()
         
-        self.geometry(GUIConstants.window_default_size)
-        self.minsize(900, 1000)
+        width = int(screen_w * 0.25)
+        height = int(screen_h * 0.45)
+
+        self.geometry(f"{width}x{height}")
+        self.minsize(width, height)
+        self.maxsize(1400, 1200)
+
+
+        scale = self.winfo_screenheight() / 1080
+
+        app_font_family: str = "Arial"
+        self.title_font: tuple = (app_font_family, int(30 * scale), "bold")
+        self.switch_font: tuple = (app_font_family, int(17 * scale))
+        self.io_font: tuple = (app_font_family, int(15 * scale))
+        self.other_font: tuple = (app_font_family, int(12 * scale))
         
         self.title(GUIConstants.app_title)
+
+        ctk.set_widget_scaling(1.0)
+        ctk.set_window_scaling(1.0)
+        dpi_scale = self.winfo_fpixels('1i') / 120
+        ctk.set_widget_scaling(dpi_scale)
+        ctk.set_window_scaling(dpi_scale)
+
+
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=0)
@@ -69,7 +89,7 @@ class App(ctk.CTk):
         self.grid_rowconfigure(4, weight=1)
         self.grid_rowconfigure(5, weight=1)
 
-        self.title_label = ctk.CTkLabel(self, text=AppName.app_name, font=GUIConstants.title_font)
+        self.title_label = ctk.CTkLabel(self, text=AppName.app_name, font=self.title_font)
         self.title_label.grid(row=0, column=1, pady=20, sticky="nsew")
 
         self.center_frame = ctk.CTkFrame(self, fg_color="transparent")
@@ -78,7 +98,7 @@ class App(ctk.CTk):
         self.center_frame.grid_columnconfigure(1, weight=0)
         self.center_frame.grid_columnconfigure(2, weight=0)
 
-        self.left_label = ctk.CTkLabel(self.center_frame, text="Text to Morse", font=GUIConstants.switch_font)
+        self.left_label = ctk.CTkLabel(self.center_frame, text="Text to Morse", font=self.switch_font)
         self.left_label.grid(row=0, column=0, padx=(0, 8), sticky="e")
 
         self.operation_type_switch_var = ctk.StringVar(value="text-to-morse")
@@ -95,13 +115,13 @@ class App(ctk.CTk):
                                               button_hover_color=GUIConstants.translation_direction_switch_theme_color["btnh"])
         self.operation_type_switch.grid(row=0, column=1, padx=8)
 
-        self.right_label = ctk.CTkLabel(self.center_frame, text="Morse to Text", font=GUIConstants.switch_font)
+        self.right_label = ctk.CTkLabel(self.center_frame, text="Morse to Text", font=self.switch_font)
         self.right_label.grid(row=0, column=2, padx=(8, 0), sticky="w")
 
         self.input_field = ctk.CTkTextbox(self,
         width=800,
         height=200,
-        font=GUIConstants.io_font,
+        font=self.io_font,
         corner_radius=30,
         border_color=GUIConstants.io_border_color,
         border_width=1)
@@ -114,7 +134,7 @@ class App(ctk.CTk):
         self.output_field = ctk.CTkTextbox(self,
         width=800,
         height=200,
-        font=GUIConstants.io_font,
+        font=self.io_font,
         corner_radius=30,
         border_color=GUIConstants.io_border_color,
         border_width=1)
@@ -127,7 +147,7 @@ class App(ctk.CTk):
         text="Translate",
         width=200,
         height=90,
-        font=GUIConstants.other_font,
+        font=self.other_font,
         corner_radius=50,
         command=self.fire_translate)
         self.translate_button.grid(row=4, column=1, sticky="n")
@@ -140,7 +160,7 @@ class App(ctk.CTk):
         self.bottom_frame.grid_columnconfigure(1, weight=1)
         self.bottom_frame.grid_columnconfigure(2, weight=1)
         
-        self.mode_selector_label = ctk.CTkLabel(self.bottom_frame, text="Mode:", font=GUIConstants.other_font)
+        self.mode_selector_label = ctk.CTkLabel(self.bottom_frame, text="Mode:", font=self.other_font)
         self.mode_selector_label.grid(row=0, column=0, padx=(20, 0), sticky="sw")
 
         self.translation_mode_var = ctk.StringVar(value=GUIConstants.translation_mode_values[0])
@@ -149,8 +169,8 @@ class App(ctk.CTk):
                                                       variable=self.translation_mode_var,
                                                       width=200,
                                                       height=50,
-                                                      font=GUIConstants.other_font,
-                                                      dropdown_font=GUIConstants.other_font,
+                                                      font=self.other_font,
+                                                      dropdown_font=self.other_font,
                                                       fg_color=GUIConstants.option_menu_theme_colors["dark"]["fg"],
                                                       button_color=GUIConstants.option_menu_theme_colors["dark"]["btn"],
                                                       dynamic_resizing=False,
@@ -160,7 +180,7 @@ class App(ctk.CTk):
         self.api_switcher_var = ctk.StringVar(value="off")
         self.api_switch_label = ctk.CTkLabel(self.bottom_frame,
                                              text=f"API State: {self.api_switcher_var.get().title()}",
-                                             font=GUIConstants.other_font)
+                                             font=self.other_font)
         self.api_switch_label.grid(row=0, column=1)
 
         self.api_switch = ctk.CTkSwitch(self.bottom_frame,
@@ -177,7 +197,7 @@ class App(ctk.CTk):
                                               button_hover_color=GUIConstants.api_state_switch_theme_color["btnh"])
         self.api_switch.grid(row=1, column=1)
 
-        self.theme_selector_label = ctk.CTkLabel(self.bottom_frame, text=":Theme", font=GUIConstants.other_font)
+        self.theme_selector_label = ctk.CTkLabel(self.bottom_frame, text=":Theme", font=self.other_font)
         self.theme_selector_label.grid(row=0, column=2, padx=(0, 20), sticky="se")
 
         self.theme_var = ctk.StringVar(value="System")
@@ -186,8 +206,8 @@ class App(ctk.CTk):
                                                       variable=self.theme_var,
                                                       width=200,
                                                       height=50,
-                                                      font=GUIConstants.other_font,
-                                                      dropdown_font=GUIConstants.other_font,
+                                                      font=self.other_font,
+                                                      dropdown_font=self.other_font,
                                                       fg_color=GUIConstants.option_menu_theme_colors["dark"]["fg"],
                                                       button_color=GUIConstants.option_menu_theme_colors["dark"]["btn"],
                                                       dynamic_resizing=False,
