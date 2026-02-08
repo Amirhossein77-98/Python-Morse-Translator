@@ -53,8 +53,8 @@ class App(ctk.CTk):
         screen_w = self.winfo_screenwidth()
         screen_h = self.winfo_screenheight()
         
-        width = int(screen_w * 0.25)
-        height = int(screen_h * 0.45)
+        width = int(screen_w * 0.35)
+        height = int(screen_h * 0.7)
 
         self.geometry(f"{width}x{height}")
         self.minsize(width, height)
@@ -71,9 +71,9 @@ class App(ctk.CTk):
         
         self.title(GUIConstants.app_title)
 
-        ctk.set_widget_scaling(1.0)
-        ctk.set_window_scaling(1.0)
-        dpi_scale = self.winfo_fpixels('1i') / 120
+        ctk.set_widget_scaling(0.75)
+        ctk.set_window_scaling(0.75)
+        dpi_scale = self.winfo_fpixels('1i') / 130
         ctk.set_widget_scaling(dpi_scale)
         ctk.set_window_scaling(dpi_scale)
 
